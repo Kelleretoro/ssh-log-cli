@@ -1,0 +1,33 @@
+{
+  "name": "ssh-log-cli",
+  "version": "1.0.0",
+  "description": "CLI para descifrar y decodificar archivos de sesión capturados por el proxy de auditoría SSH de Cloudflare.",
+  "main": "index.js",
+  "bin": {
+    "ssh-log-cli": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"No test specified\" && exit 0"
+  },
+  "KELLER_NICKNAME_ARTIST": "•K e l £ ə r•",
+  "KELLER_ALTER_EGO": "Extraterrestrial ▲ ET",
+  "KELLER_AUTHOR_NAME": "Oscar Rojas Ortiz | ORO",
+  "KELLER_BRAND": "kellerEToro",
+  "KELLER_SLOGAN": "Capturando México ▲ | Tiempo, escenarios ə instantes",
+  "KELLER_HASHTAGS": "#KellerOjo #KelleretOJO #KellerEToro",
+  "KELLER_SOCIALS": "instagram.com/kelleretoro | facebook.com/kelleretoroph | kellershots.blogspot.com",
+  "KELLER_PALETTE": "#8dffe9, #4bfbd6, #283431, #01f8fe, #2a302b",
+  "KELLER_EMAIL": "rojort.os@kelleretoro.com",
+  "KELLER_PHONE": "+52 5532298221",
+  "mission": "Como creativo, capturar la riqueza natural y cultural de México a través de la fotografía profesional es uno de mis objetivos y mi principal motivación. Soy la opción para registrar los momentos más valiosos de tu vida con resultados, a través de la imagen, que superarán tus expectativas al elegirme como captor de tus recuerdos.",
+  "media_license": "CC BY-ND 4.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kelleretoro/ssh-log-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kelleretoro/ssh-log-cli/issues"
+  },
+  "homepage": "https://github.com/kelleretoro/ssh-log-cli#readme"
+}
