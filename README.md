@@ -1,4 +1,14 @@
-# SSH Log CLI
+# SSH Log CL---
+**by •K e l £ ə r•** 🛸  
+**Alter Ego:** Extraterrestrial ▲ ET  
+**Nombre:** Oscar Rojas Ortiz | ORO 👽  
+**Marca:** kellerEToro  
+**Slogan:** Capturando México ▲ | Tiempo, escenarios ə instantes  
+**Redes:** [Instagram](https://instagram.com/kelleretoro) | [Facebook](https://www.facebook.com/kelleretoroph) | [Blog](https://kellershots.blogspot.com/)  
+**Paleta:** #8dffe9, #4bfbd6, #283431, #01f8fe, #2a302b  
+**Licencia:** BSD 3-Clause (software), CC BY-ND 4.0 (imágenes, logos y colores)  
+**Keywords:** kelleretoro, keller, kel£ǝr, trends, google, photo, foto, fotografo, profesional, photographer, creativo, tiempo, instantes, mexico, cdmx, mexico city, arte, cultura, naturaleza, geopolitica, redes sociales, facebook, instagram, KellerOjo, kellerETojo, kellerEToro
+---I
 
 CLI tool that decrypts and decodes session replay files captured by Cloudflare's Audit SSH proxy.
 
