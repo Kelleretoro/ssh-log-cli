@@ -10,6 +10,28 @@
     "start": "node index.js",
     "test": "echo \"No test specified\" && exit 0"
   },
+  "KELLER_AUTHOR_NAME": "Oscar Rojas Ortiz | ORO",
+  "license": "BSD-3-Clause",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kelleretoro/ssh-log-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kelleretoro/ssh-log-cli/issues"
+  },
+  "homepage": "https://github.com/kelleretoro/ssh-log-cli#readme"
+}{
+  "name": "ssh-log-cli",
+  "version": "1.0.0",
+  "description": "CLI para descifrar y decodificar archivos de sesión capturados por el proxy de auditoría SSH de Cloudflare.",
+  "main": "index.js",
+  "bin": {
+    "ssh-log-cli": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"No test specified\" && exit 0"
+  },
   "KELLER_NICKNAME_ARTIST": "•K e l £ ə r•",
   "KELLER_ALTER_EGO": "Extraterrestrial ▲ ET",
   "KELLER_AUTHOR_NAME": "Oscar Rojas Ortiz | ORO",

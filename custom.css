@@ -1,0 +1,26 @@
+.monaco-workbench .part.sidebar::before {
+    content: "";
+    display: block;
+    width: 96px;
+    height: 96px;
+    margin: 20px auto 12px auto;
+    background-image: url("./assets/logo.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 16px;
+    opacity: 0.97;
+}
+
+.monaco-workbench .part.statusbar::after {
+    content: "";
+    display: block;
+    width: 200px;
+    height: 36px;
+    margin: 2px auto 2px auto;
+    background-image: url("./assets/letrero.jpg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.97;
+}
