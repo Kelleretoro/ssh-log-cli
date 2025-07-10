@@ -29,25 +29,19 @@ pub fn generate_replay<R: Read, W: Write>(
     mut data_writer: W,
     mut times_writer: W,
 ) -> Result<(), PTYParserError> {
-    let pty = match &meta.pty {
-        Some(pty_meta) => pty_meta,
-        None => return Err(PTYParserError::PTYNotFound),
-    };
-
-    let echo_enabled = pty
-        .modes
-        .iter()
-        .any(|(mode, value)| mode == PTY_MODE_ECHO && *value != 0);
-
-    write!(
-        data_writer,
-        "Session started on {} [TERM=\"{}\" COLUMNS=\"{}\" LINES=\"{}\"]\n",
-        format_date(meta.started_at),
-        pty.term.clone().unwrap_or("unknown".to_string()),
-        pty.width,
-        pty.height
-    )
-    .map_err(PTYParserError::WriteError)?;
+let pty = match &meta.pty {
+    Some(pty_meta) => pty_meta,
+    None => return Err(PTYParserError::PTYNotFound),
+};
+write!(
+    data_writer,
+    "Session started on {} [TERM=\"{}\" COLUMNS=\"{}\" LINES=\"{}\"]\n",
+    format_date(meta.started_at),
+    pty.term.clone().unwrap_or("unknown".to_string()),
+    pty.width,
+    pty.height
+)
+.map_err(PTYParserError::WriteError)?;
 
     let mut latest_elapsed = 0;
     loop {
