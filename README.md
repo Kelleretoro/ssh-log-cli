@@ -1,62 +1,49 @@
-# SSH Log CL---
-**by •K e l £ ə r•** 🛸  
-**Alter Ego:** Extraterrestrial ▲ ET  
-**Nombre:** Oscar Rojas Ortiz | ORO 👽  
-**Marca:** kellerEToro  
-**Slogan:** Capturando México ▲ | Tiempo, escenarios ə instantes  
-**Redes:** [Instagram](https://instagram.com/kelleretoro) | [Facebook](https://www.facebook.com/kelleretoroph) | [Blog](https://kellershots.blogspot.com/)  
-**Paleta:** #8dffe9, #4bfbd6, #283431, #01f8fe, #2a302b  
-**Licencia:** BSD 3-Clause (software), CC BY-ND 4.0 (imágenes, logos y colores)  
-**Keywords:** kelleretoro, keller, kel£ǝr, trends, google, photo, foto, fotografo, profesional, photographer, creativo, tiempo, instantes, mexico, cdmx, mexico city, arte, cultura, naturaleza, geopolitica, redes sociales, facebook, instagram, KellerOjo, kellerETojo, kellerEToro
----I
+# ssh-log-cli
 
-CLI tool that decrypts and decodes session replay files captured by Cloudflare's Audit SSH proxy.
+![Logo](assets/logo.png)
+![Letrero](assets/letrero.jpg)
 
-## Installation
+![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
+![License](https://img.shields.io/badge/license-BSD%203--Clause-blue)
 
-### Build from source
-1. Install Rust https://doc.rust-lang.org/cargo/getting-started/installation.html;
-2. Run `cargo build --release`;
-3. Find the compiled binary within `target/release/ssh-log-cli`.
+---
 
-## Generating a key pair
+- **KELLER_NICKNAME_ARTIST:** "•K e l £ ə r•" 🛸  
+- **KELLER_ALTER_EGO:** "Extraterrestrial ▲ ET"  
+- **KELLER_NAME_AUTHOR:** "Oscar Rojas Ortiz | ORO" 👽  
+- **KELLER_BRAND:** "kellerEToro"  
+- **KELLER_SLOGAN:** "Capturando México ▲ | Tiempo, escenarios ə instantes"  
+- **KELLER_SOCIAL_NETWORKS:** [Instagram](https://instagram.com/kelleretoro) | [Facebook](https://facebook.com/kelleretoroph)  
+- **KELLER_HASHTAGS:** "#KellerOjo #kellerETojo #kellerEToro"  
+- **KELLER_PALLETS:** #8dffe9, #4bfbd6, #283431, #01f8fe, #2a302b  
+- **KELLER_LICENSE:** BSD 3-Clause (software), CC BY-ND 4.0 (imágenes, logos y colores)  
+- **KELLER_KEYWODS:** kelleretoro, keller, kel£ǝr, trends, google, photo, foto, fotografía, México  
 
-``` shell
-$ ssh-log-cli generate-key-pair -o <PRIVATE KEY FILE NAME>
-```
+---
 
-This command generates an HPKE public and private key, saving each one to its own file. The public key file gets the same name, but with a `.pub` extension.
+## Descripción
 
-#
-## Handling SSH session capture files
+`ssh-log-cli` es una herramienta CLI para descifrar y decodificar archivos de sesión capturados por el proxy de auditoría SSH de Cloudflare.
 
-### Decrypting and parsing any SSH session capture file
-``` shell
-$ ssh-log-cli decrypt -i <PATH TO INPUT FILE> -k <PATH TO HPKE private key> [-o <PATH TO OUTPUT FILE>]
-```
+---
 
- If no output file name is specified, it defaults it to <encrypted_file_name>.decrypted.zip.
+## Instalación
 
-**Note**: the output file path must be a valid ZIP file name.
+(Sigue con tus instrucciones...)
 
-### Decrypting and replaying an SSH PTY session capture file — *Linux/Mac OS X only*
-``` shell
-$ ssh-log-cli decrypt -i <PATH TO INPUT FILE> -k <PATH TO HPKE private key> --replay
-```
- 
- This will decrypt the session capture and replay it to *stdout*.
- 
- **Note**: no output file will be generated.
-#
-## Understanding the Output
- 
-### PTY Sessions
-If the encrypted file has a valid interactive session (PTY) capture, then the output ZIP will contain 2 files:
-`term_data.txt` and `term_times.txt`.
- 
-You can then extract it and either open term_data.txt and analyse it on your own or watch a replay by running:
-`scriptreplay --timing term_times.txt term_data.txt`
- 
-### Non-PTY Sessions
-If the encrypted file has a valid non-PTY session capture, then the output ZIP will contain 2 files:
-`data_from_client.txt` and `data_from_server.txt`. These contain upstream and downstream traffic, respectively.
+---
+
+## Contacto
+
+- **Autor:** Oscar Rojas Ortiz | ORO
+- **Email:** rojort.os@kelleretoro.com
+- **Instagram:** [@kelleretoro](https://instagram.com/kelleretoro)
+- **Facebook:** [kelleretoroph](https://facebook.com/kelleretoroph)
+- **Blog:** [kellershots.blogspot.com](https://kellershots.blogspot.com)
+
+---
+
+## Licencia
+
+BSD 3-Clause License (software)  
+CC BY-ND 4.0 (imágenes, logos y colores)
