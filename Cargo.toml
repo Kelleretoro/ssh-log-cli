@@ -1,13 +1,4 @@
 [package]
-name = "ssh-log-cli"
-version = "1.0.0"
-authors = ["Oscar Rojas Ortiz <rojort.os@kelleretoro.com>"]
-edition = "2021"
-description = "CLI para descifrar y decodificar archivos de sesión capturados por el proxy de auditoría SSH de Cloudflare."
-license = "BSD-3-Clause"
-repository = "https://github.com/kelleretoro/ssh-log-cli"
-
-[dependencies][package]
 edition = "2021"
 name = "ssh-log-cli"
 version = "0.1.0"
