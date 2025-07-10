@@ -15,7 +15,7 @@ pub enum DataSource {
 
 pub struct DataPacket {
     pub source: DataSource,
-    pub code: u32,
+    pub _code: u32,
     pub elapsed: Duration,
     pub data: Vec<u8>,
 }
@@ -57,7 +57,7 @@ impl<R: Read> DataDecoder<R> {
 
         Ok(Some(DataPacket {
             source,
-            code: BigEndian::read_u32(&buf[1..5]),
+            _code: BigEndian::read_u32(&buf[1..5]),
             elapsed: Duration::from_micros(BigEndian::read_u64(&buf[5..13])),
             data: Vec::from(&buf[13..]),
         }))
