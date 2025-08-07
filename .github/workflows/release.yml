@@ -35,14 +35,13 @@ jobs:
             rust: stable
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Query version number
         id: get_version
         shell: bash
         run: |
           echo "using version tag ${GITHUB_REF:10}"
-          echo ::set-output name=version::"${GITHUB_REF:10}"
       - name: Install Rust
         if: matrix.rust
         run: |
@@ -96,7 +95,7 @@ jobs:
           mv ${{ env.RELEASE_ADDS }} ./dist
           7z a ./${{ env.RELEASE_DIR }}/${{ env.RELEASE_BIN }}-${{ steps.get_version.outputs.VERSION }}-${{ env.MACOS_TARGET }}.zip ./dist/*
       - name: Upload Zip
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.build }}
           path: ./${{ env.RELEASE_DIR }}
@@ -122,12 +121,12 @@ jobs:
           release_name: ${{ steps.get_version.outputs.VERSION }}
 
       - name: Download Linux tarball
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v4
         with:
           name: linux
 
       - name: Download Windows tarball
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v4
         with:
           name: windows
 
