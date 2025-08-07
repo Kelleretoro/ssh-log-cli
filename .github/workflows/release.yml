@@ -5,6 +5,12 @@ on:
 
 name: Release
 
+# ✨ NUEVO: Permisos para attestations
+permissions:
+  contents: write
+  id-token: write      # Para firmar con Sigstore
+  attestations: write  # Para guardar attestations
+
 env:
   RELEASE_BIN: ssh-log-cli
   RELEASE_DIR: artifacts
@@ -12,7 +18,6 @@ env:
   WINDOWS_TARGET: x86_64-pc-windows-msvc
   MACOS_TARGET: x86_64-apple-darwin
   LINUX_TARGET: x86_64-unknown-linux-musl
-
   # Space separated paths to include in the archive.
   RELEASE_ADDS: README.md
 
@@ -43,16 +48,19 @@ jobs:
         run: |
           echo "using version tag ${GITHUB_REF:10}"
           echo ::set-output name=version::"${GITHUB_REF:10}"
+
       - name: Install Rust
         if: matrix.rust
         run: |
           rustup update ${{ matrix.rust }} --no-self-update
           rustup default ${{ matrix.rust }}
+
       - name: Install musl-tools (Linux)
         if: matrix.build == 'linux'
         run: |
           sudo apt-get update -y
           sudo apt-get install musl-tools -y
+
       - name: Install p7zip (MacOS)
         if: matrix.build == 'macos'
         run: brew install p7zip
@@ -62,6 +70,7 @@ jobs:
         run: |
           rustup target add ${{ env.LINUX_TARGET }}
           cargo build --release --target ${{ env.LINUX_TARGET }}
+
       - name: Build (MacOS)
         if: matrix.build == 'macos'
         run: cargo build --release
@@ -76,12 +85,14 @@ jobs:
         run: |
           mkdir ${{ env.RELEASE_DIR }}
           mkdir dist
+
       - name: Create zip (Linux)
         if: matrix.build == 'linux'
         run: |
           mv ./target/${{ env.LINUX_TARGET }}/release/${{ env.RELEASE_BIN }} ./dist/${{ env.RELEASE_BIN }}
           mv ${{ env.RELEASE_ADDS }} ./dist
           7z a ./${{ env.RELEASE_DIR }}/${{ env.RELEASE_BIN }}-${{ steps.get_version.outputs.VERSION }}-${{ env.LINUX_TARGET }}.zip ./dist/*
+
       - name: Create zip (Windows)
         if: matrix.build == 'windows'
         shell: bash
@@ -89,12 +100,14 @@ jobs:
           mv ./target/release/${{ env.RELEASE_BIN }}.exe ./dist/${{ env.RELEASE_BIN }}.exe
           mv ${{ env.RELEASE_ADDS }} ./dist
           7z a ./${{ env.RELEASE_DIR }}/${{ env.RELEASE_BIN }}-${{ steps.get_version.outputs.VERSION }}-${{ env.WINDOWS_TARGET }}.zip ./dist/*
+
       - name: Create zip (MacOS)
         if: matrix.build == 'macos'
         run: |
           mv ./target/release/${{ env.RELEASE_BIN }} ./dist/${{ env.RELEASE_BIN }}
           mv ${{ env.RELEASE_ADDS }} ./dist
           7z a ./${{ env.RELEASE_DIR }}/${{ env.RELEASE_BIN }}-${{ steps.get_version.outputs.VERSION }}-${{ env.MACOS_TARGET }}.zip ./dist/*
+
       - name: Upload Zip
         uses: actions/upload-artifact@v1
         with:
@@ -112,6 +125,7 @@ jobs:
         run: |
           echo "using version tag ${GITHUB_REF:10}"
           echo ::set-output name=version::"${GITHUB_REF:10}"
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -165,3 +179,12 @@ jobs:
           asset_path: ./macos/${{ env.RELEASE_BIN }}-${{ steps.get_version.outputs.VERSION }}-${{ env.MACOS_TARGET }}.zip
           asset_content_type: application/gzip
           asset_name: ${{ env.RELEASE_BIN }}-${{ steps.get_version.outputs.VERSION }}-${{ env.MACOS_TARGET }}.zip
+
+      # ✨ NUEVO: Attestations para todos los artefactos
+      - name: Attest release artifacts
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: |
+            ./linux/${{ env.RELEASE_BIN }}-${{ steps.get_version.outputs.VERSION }}-${{ env.LINUX_TARGET }}.zip
+            ./windows/${{ env.RELEASE_BIN }}-${{ steps.get_version.outputs.VERSION }}-${{ env.WINDOWS_TARGET }}.zip
+            ./macos/${{ env.RELEASE_BIN }}-${{ steps.get_version.outputs.VERSION }}-${{ env.MACOS_TARGET }}.zip
