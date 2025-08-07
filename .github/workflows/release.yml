@@ -110,8 +110,8 @@ jobs:
         shell: bash
         run: |
           echo "using version tag ${GITHUB_REF:10}"
-          echo ::set-output name=version::"${GITHUB_REF:10}"
-      - name: Create Release
+          echo "version=${GITHUB_REF:10}" >> $GITHUB_OUTPUT     
+        - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
@@ -131,12 +131,12 @@ jobs:
           name: windows
 
       - name: Download MacOS zip
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v4
         with:
           name: macos
 
       - name: Release Linux zip
-        uses: actions/upload-release-asset@v1
+        uses: actions/upload-release-asset@v4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
