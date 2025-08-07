@@ -74,7 +74,7 @@ fn write_exit_data<W: Write>(mut writer: W, data: &Option<ExitData>) -> Result<(
             let end = format_date(exit_data.timestamp);
 
             if let Some(ref e) = exit_data.error_msg {
-                format!("\nScript done on {} [ERROR=\"{}\"]\n", end, e)
+                format!("\nScript done on {end} [ERROR=\"{e}\"]\n")
             } else if exit_data.core_dumped {
                 format!("\nScript done on {} [CORE DUMPED]\n", end)
             } else {
