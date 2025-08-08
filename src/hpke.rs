@@ -138,7 +138,7 @@ impl<R: Read> Read for Ctx<R> {
             // grab some more bytes from the underlying reader
             let decrypted = self
                 .decrypt_block()
-                .map_err(|e| io::Error::new(io::ErrorKind::Other, e))?;
+                .map_err(|e| io::Error::other(e))?;
             self.pending = write_buf(&decrypted, &mut c, buf_remaining)?;
         }
 
