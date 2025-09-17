@@ -150,6 +150,54 @@ jobs:
         with:
           name: macos
 
+      - name: Add session logs with retry
+        shell: bash
+        run: |
+          # Retry logic for external session logs service (503 errors)
+          RETRY_COUNT=0
+          MAX_RETRIES=5
+          
+          add_session_logs() {
+            # Replace this with actual session logs service call
+            # For demo purposes, we'll simulate a command that might fail with 503
+            echo "Attempting to add session logs..."
+            # curl -X POST "https://logs-service.example.com/api/sessions" \
+            #   -H "Authorization: Bearer ${{ secrets.LOGS_API_TOKEN }}" \
+            #   -H "Content-Type: application/json" \
+            #   -d "{\"version\": \"${{ steps.get_version.outputs.VERSION }}\", \"artifacts\": [\"linux\", \"windows\", \"macos\"]}"
+            
+            # Simulate random failure for demo (remove in production)
+            if [ $((RANDOM % 3)) -eq 0 ]; then
+              echo "HTTP 503 Service Unavailable"
+              return 503
+            else
+              echo "Session logs added successfully"
+              return 0
+            fi
+          }
+          
+          while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
+            if add_session_logs; then
+              echo "Session logs added successfully on attempt $((RETRY_COUNT + 1))"
+              break
+            else
+              EXIT_CODE=$?
+              RETRY_COUNT=$((RETRY_COUNT + 1))
+              
+              if [ $EXIT_CODE -eq 503 ] && [ $RETRY_COUNT -lt $MAX_RETRIES ]; then
+                WAIT_TIME=$((2 ** RETRY_COUNT))  # Exponential backoff: 2, 4, 8, 16 seconds
+                echo "Service unavailable (503). Retry $RETRY_COUNT/$MAX_RETRIES in $WAIT_TIME seconds..."
+                sleep $WAIT_TIME
+              elif [ $RETRY_COUNT -ge $MAX_RETRIES ]; then
+                echo "Failed to add session logs after $MAX_RETRIES attempts"
+                exit 1
+              else
+                echo "Failed with non-503 error (exit code: $EXIT_CODE). Not retrying."
+                exit $EXIT_CODE
+              fi
+            fi
+          done
+
       - name: Release Linux zip
         uses: actions/upload-release-asset@v1
         env:
