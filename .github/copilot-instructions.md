@@ -4,6 +4,10 @@ SSH Log CLI is a Rust command-line tool that decrypts and decodes session replay
 
 Always reference these instructions first and fallback to search or bash commands only when you encounter unexpected information that does not match the info here.
 
+<tool_calling>
+You have the capability to call multiple tools in a single response. For maximum efficiency, whenever you need to perform multiple independent operations, ALWAYS invoke all relevant tools simultaneously rather than sequentially. Especially when exploring repository, reading files, viewing directories, validating changes or replying to comments.
+</tool_calling>
+
 ## Working Effectively
 
 - Bootstrap, build, and test the repository:
@@ -36,6 +40,7 @@ Always reference these instructions first and fallback to search or bash command
   - Test help commands: `cargo run -- --help` and `cargo run -- decrypt --help`
 - ALWAYS run `cargo fmt --check` and `cargo clippy` before committing changes or the CI (.github/workflows/lint.yaml) will fail
 - Build artifacts are located in `target/` directory and should not be committed
+- NOTE: While the project has test dependencies (`assert_cmd`, `assert_fs`), there are currently 0 unit tests. Focus on manual end-to-end validation and integration testing through CLI usage
 
 ## Repository Structure
 
@@ -61,13 +66,19 @@ ssh-log-cli/
 
 ## Key Dependencies
 
-- `clap` v3.0.0 - Command-line argument parsing with derive features
+- `clap` v3.0.14 - Command-line argument parsing with derive features
 - `hpke` v0.8.0 - HPKE encryption with serde support
 - `chrono` v0.4.19 - Date and time handling
 - `serde` and `serde_json` - Serialization and JSON parsing
 - `base64` v0.13.0 - Base64 encoding/decoding
-- `thiserror` v1.0.20 - Error handling macros
+- `thiserror` v1.0.30 - Error handling macros
 - `zip` v0.6.2 - ZIP file creation and manipulation
+- `tempfile` v3.3.0 - Temporary file/directory creation
+- `walkdir` v2.3.2 - Recursive directory traversal
+
+### Test Dependencies
+- `assert_cmd` v2.0.4 - Command-line testing utilities (currently unused)
+- `assert_fs` v1.0.7 - File system assertion helpers (currently unused)
 
 ## Build Times and Timeouts
 
@@ -87,6 +98,16 @@ ssh-log-cli/
 - SSH session replay functionality requires Linux or macOS (Windows not supported for replay)
 - `scriptreplay` command must be available in PATH for replay functionality
 - All encrypted input files must be valid Cloudflare SSH audit log format
+
+### Common Build Warnings
+- `unused variable: echo_enabled` in `src/pty.rs` - This is expected and can be ignored
+- `field code is never read` in `src/data.rs` - This is expected and can be ignored
+- Various clippy warnings are present but don't prevent builds from succeeding
+
+### File Location Issues
+- Key generation creates files in the current working directory, not necessarily `/tmp/`
+- Always check the current working directory when running `cargo run` commands
+- Build artifacts (including generated keys during testing) should be cleaned up or added to `.gitignore`
 
 ## Common Commands Reference
 
